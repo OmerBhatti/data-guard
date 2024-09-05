@@ -1,39 +1,40 @@
+import { InvalidDataError } from './errors';
+import { Rule, Dictionary } from './types';
 
-import { StringRule, IntegerRule, FloatRule, BooleanRule, ArrayRule, DateRule } from "./rules";
-import Validator from "./validator";
+export default class Validator {
+	constructor(public rules: Dictionary<Rule<any>> = {}, public data: Dictionary<any> = {}) {}
 
-const rules = {
-    "username": new StringRule(true, null, 20, new RegExp("^[a-zA-Z0-9]+$")),
-    "age": new IntegerRule(false),
-    "salary": new FloatRule(true, 2),
-    "active": new BooleanRule(),
-    "ids": new ArrayRule(new ArrayRule(new ArrayRule(new FloatRule()))),
-    "startDate": new DateRule(true),
-    "endDate": new DateRule(true, new Date("2021-01-01"), new Date("2021-01-30")),
-    "status": new StringRule(true, null, null, null, ["abc", "123", "2323"]),
-}
+	validate(raiseErrors: boolean = false): Dictionary<string> {
+		const errors: Dictionary<string> = {};
+		Object.keys(this.rules).forEach(key => {
+			const rule = this.rules[key];
+			const value = this.data[key];
+			if (!(key in this.data)) {
+				if (rule.required) {
+					errors[key] = 'Required';
+				}
+			} else {
+				const error = rule.validate(value);
+				if (error !== null) {
+					errors[key] = error;
+				}
+			}
+		});
+		if (raiseErrors && Object.keys(errors).length > 0) {
+			throw new InvalidDataError(JSON.stringify(errors, null, 3));
+		}
+		return errors;
+	}
 
-const data = {
-    "username": "omer",
-    "extra": "data",
-    "dangerousField": "data",
-    "salary": "12000.2378787878",
-    "active": 0,
-    "ids": [
-        [1, 2, 3, 4],
-        [1, 2, 3],
-        [1]
-    ],
-    "startDate": 1725536105796,
-    "endDate": new Date("2021-01-30"),
-    "status": 4
-}
-
-const validator = new Validator(data, rules)
-try {
-    console.log(validator.validate(true))
-    console.log(validator.cleanedData())
-}
-catch (e) {
-    console.log(e)
+	cleanedData(): Dictionary<any> {
+		return Object.keys(this.rules).reduce((acc, key) => {
+			const rule = this.rules[key];
+			const value = rule.cleanedData();
+			if (value !== null) {
+				// @ts-ignore
+				acc[key] = value;
+			}
+			return acc;
+		}, {});
+	}
 }
