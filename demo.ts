@@ -18,7 +18,7 @@ const API_RULES = {
 };
 
 const validator = new Validator(API_RULES, {
-	username: 'test_user',
+	username: 'testuser',
 	extra: 'data: [1, 2, 3, 4]',
 	dangerousField: 'Virus Code Here !!!',
 	salary: '12000.2378787878',

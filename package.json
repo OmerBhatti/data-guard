@@ -1,0 +1,29 @@
+{
+  "name": "@omer_bhatti/data-guard",
+  "version": "0.1.0",
+  "description": "Validate any JSON by defined set of rules and get cleaned JSON inspired by Django Rest Framework Serializer",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OmerBhatti/data-guard.git"
+  },
+  "keywords": [
+    "data validator",
+    "serializer",
+    "json validator",
+    "sanitize json",
+    "json cleaner",
+    "json serializer"
+  ],
+  "author": "Omer Bhatti",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/OmerBhatti/data-guard/issues"
+  },
+  "homepage": "https://github.com/OmerBhatti/data-guard#readme"
+}
