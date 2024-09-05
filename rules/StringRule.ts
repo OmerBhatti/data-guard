@@ -2,13 +2,14 @@
 import { Rule } from "../types";
 
 export class StringRule implements Rule<string> {
+
     data: string|null = null;
 
     constructor(
         public required: boolean = true,
         public min: number|null = null,
         public max: number|null = null,
-        public pattern: RegExp|null = null
+        public pattern: RegExp|null = null,
     ) {}
 
     validate(data: string|null): string|null {
@@ -32,6 +33,9 @@ export class StringRule implements Rule<string> {
     }
 
     cleanedData(): string|null {
+        if (this.data === null) {
+            return null;
+        }
         return this.data;
     }
 }
