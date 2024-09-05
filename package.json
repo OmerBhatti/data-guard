@@ -1,6 +1,6 @@
 {
   "name": "@omer_bhatti/data-guard",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Validate any JSON by defined set of rules and get cleaned JSON inspired by Django Rest Framework Serializer",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
