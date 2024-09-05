@@ -2,18 +2,17 @@
 import { InvalidTypeError } from "../errors";
 import { Rule } from "../types";
 
-export class FloatRule implements Rule<number> {
+export class DateRule implements Rule<Date> {
 
-    data: number|null = null;
+    data: Date|null = null;
 
     constructor(
         public required: boolean = true,
-        public precision: number = 2,
-        public min: number|null = null,
-        public max: number|null = null,
+        public min: Date|null = null,
+        public max: Date|null = null,
     ) {}
 
-    validate(data: number|null): string|null {
+    validate(data: Date|null): string|null {
         this.data = data;
         if (this.required && this.data === null) {
             return "Required";
@@ -25,20 +24,18 @@ export class FloatRule implements Rule<number> {
             return `This field must be at most ${this.max}`;
         }
         if (this.data !== null) {
-            const parsed = parseFloat(this.data.toString());
-            if (typeof this.data !== "number" && isNaN(parsed)) {
-                throw new InvalidTypeError("Invalid data type! expected \"number\"");
+            const date =  new Date(this.data);
+            if (date.toString() === "Invalid Date") {
+                throw new InvalidTypeError("Invalid data type! expected \"date\" or \"number\" or \"string\"");
             }
         }
         return null;
     }
 
-    cleanedData(): number|null {
+    cleanedData(): Date|null {
         if (this.data === null) {
             return null;
         }
-        const parsed = parseFloat(this.data.toString());
-        this.data = parsed;
-        return parseFloat(this.data.toFixed(this.precision));
+        return new Date(this.data);
     }
 }

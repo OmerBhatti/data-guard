@@ -1,5 +1,5 @@
 
-import { StringRule, IntegerRule, FloatRule, BooleanRule, ArrayRule } from "./rules";
+import { StringRule, IntegerRule, FloatRule, BooleanRule, ArrayRule, DateRule } from "./rules";
 import Validator from "./validator";
 
 const rules = {
@@ -8,6 +8,8 @@ const rules = {
     "salary": new FloatRule(true, 2),
     "active": new BooleanRule(),
     "ids": new ArrayRule(new ArrayRule(new ArrayRule(new FloatRule()))),
+    "startDate": new DateRule(true),
+    "endDate": new DateRule(true, new Date("2021-01-01"), new Date("2021-01-30")),
 }
 
 const data = {
@@ -20,12 +22,14 @@ const data = {
         [1, 2, 3, 4],
         [1, 2, 3],
         [1]
-    ]
+    ],
+    "startDate": 1725536105796,
+    "endDate": new Date("2021-01-30"),
 }
 
 const validator = new Validator(data, rules)
 try {
-    console.log(validator.validate(true))
+    console.log(validator.validate())
     console.log(validator.cleanedData())
 }
 catch (e) {

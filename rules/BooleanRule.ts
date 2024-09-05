@@ -32,7 +32,7 @@ export class BooleanRule implements Rule<boolean> {
             return this.data;
         }
         else {
-            throw new InvalidTypeError("Invalid data type expected \"boolean\"");
+            throw new InvalidTypeError("Invalid data type! expected \"boolean\"");
         }
     }
 }

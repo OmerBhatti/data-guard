@@ -1,5 +1,3 @@
-
-import { DataAccessError, InvalidDataError } from "./errors";
 import { Rule, Dictionary } from "./types";
 
 export default class Validator {
@@ -9,7 +7,7 @@ export default class Validator {
         public rules: Dictionary<Rule<any>> = {},
     ) {}
 
-    validate(raiseErrors: boolean = false): Dictionary<string> {
+    validate(): Dictionary<string> {
         const errors: Dictionary<string> = {};
         Object.keys(this.rules).forEach((key) => {
             const rule = this.rules[key];
@@ -26,10 +24,6 @@ export default class Validator {
                 }
             }
         });
-
-        if (raiseErrors && Object.keys(errors).length > 0) {
-            throw new InvalidDataError(JSON.stringify(errors, null, 3));
-        }
         return errors;
     }
 
@@ -38,7 +32,7 @@ export default class Validator {
             const rule = this.rules[key];
             const value = rule.cleanedData();
             if (value !== null) {
-                // @ts-ignore 
+                // @ts-ignore
                 acc[key] = value;
             }
             return acc;
