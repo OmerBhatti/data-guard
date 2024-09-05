@@ -1,3 +1,4 @@
+import { InvalidDataError } from "./errors";
 import { Rule, Dictionary } from "./types";
 
 export default class Validator {
@@ -7,7 +8,7 @@ export default class Validator {
         public rules: Dictionary<Rule<any>> = {},
     ) {}
 
-    validate(): Dictionary<string> {
+    validate(raiseErrors: boolean = false): Dictionary<string> {
         const errors: Dictionary<string> = {};
         Object.keys(this.rules).forEach((key) => {
             const rule = this.rules[key];
@@ -24,6 +25,9 @@ export default class Validator {
                 }
             }
         });
+        if (raiseErrors && Object.keys(errors).length > 0) {
+            throw new InvalidDataError(JSON.stringify(errors, null, 3));
+        }
         return errors;
     }
 

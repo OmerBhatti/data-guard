@@ -11,6 +11,7 @@ export class FloatRule implements Rule<number> {
         public precision: number = 2,
         public min: number|null = null,
         public max: number|null = null,
+        public choices: number[] = [],
     ) {}
 
     validate(data: number|null): string|null {
@@ -23,6 +24,9 @@ export class FloatRule implements Rule<number> {
         }
         if (this.data !== null && this.max !== null && this.data > this.max) {
             return `This field must be at most ${this.max}`;
+        }
+        if (this.data !== null && this.choices.length > 0 && !this.choices.includes(this.data)) {
+            return `This field must be one of ${this.choices.join(", ")}`;
         }
         if (this.data !== null) {
             const parsed = parseFloat(this.data.toString());

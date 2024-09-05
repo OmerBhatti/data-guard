@@ -10,6 +10,7 @@ const rules = {
     "ids": new ArrayRule(new ArrayRule(new ArrayRule(new FloatRule()))),
     "startDate": new DateRule(true),
     "endDate": new DateRule(true, new Date("2021-01-01"), new Date("2021-01-30")),
+    "status": new StringRule(true, null, null, null, ["abc", "123", "2323"]),
 }
 
 const data = {
@@ -25,11 +26,12 @@ const data = {
     ],
     "startDate": 1725536105796,
     "endDate": new Date("2021-01-30"),
+    "status": 4
 }
 
 const validator = new Validator(data, rules)
 try {
-    console.log(validator.validate())
+    console.log(validator.validate(true))
     console.log(validator.cleanedData())
 }
 catch (e) {

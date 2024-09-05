@@ -10,6 +10,7 @@ export class StringRule implements Rule<string> {
         public min: number|null = null,
         public max: number|null = null,
         public pattern: RegExp|null = null,
+        public choices: string[] = [],
     ) {}
 
     validate(data: string|null): string|null {
@@ -25,6 +26,9 @@ export class StringRule implements Rule<string> {
         }
         if (this.data !== null && this.pattern !== null && !this.pattern.test(this.data)) {
             return `This field must match ${this.pattern}`;
+        }
+        if (this.data !== null && this.choices.length > 0 && !this.choices.includes(this.data)) {
+            return `This field must be one of ${this.choices.join(", ")}`;
         }
         return null;
     }

@@ -24,6 +24,9 @@ export class IntegerRule implements Rule<number> {
         if (this.data !== null && this.max !== null && this.data > this.max) {
             return `This field must be at most ${this.max}`;
         }
+        if (this.data !== null && this.choices.length > 0 && !this.choices.includes(this.data)) {
+            return `This field must be one of ${this.choices.join(", ")}`;
+        }
         if (this.data !== null) {
             const parsed = parseInt(this.data.toString());
             if (typeof this.data !== "number" && isNaN(parsed)) {
