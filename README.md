@@ -20,7 +20,7 @@ Here's a basic example of how to use Data Guard:
 Create a set of validation rules for your API data:
 ```typescript
 import {
-    StringRule, IntegerRule, FloatRule, BooleanRule, ArrayRule, DateRule, JSONRule
+    StringRule, IntegerRule, FloatRule, BooleanRule, ArrayRule, DateRule, JSONRule, FileRule
 } from '@omerbhatti/data-guard';
 
 const USER_API_RULES = {
@@ -37,6 +37,7 @@ const USER_API_RULES = {
     age: new IntegerRule(false),
   }),
   data: new JSONRule(false, {}),
+	image: new FileRule(true, 2048 * 2048 * 5, ['image/png', 'image/jpeg']),
 };
 ```
 2. Create a Validator Instance
@@ -57,6 +58,7 @@ const validator = new Validator(USER_API_RULES, {
     email: 'abc@gmail.com',
     age: 23,
   },
+  image: new File([fs.readFileSync('./test.png')], 'test.png', { type: 'image/png' }),
 });
 ```
 3. Validate Data
@@ -64,8 +66,8 @@ const validator = new Validator(USER_API_RULES, {
 try {
   console.log("errors: " + validator.validate(true));  // Outputs validation results
   console.log("cleanedData: " + validator.cleanedData());   // Outputs cleaned data
-} catch (e) {
-  console.error(e);  // Handle validation errors
+} catch (exc) {
+  console.error(exc);  // Handle validation errors
 }
 ```
 
@@ -80,7 +82,13 @@ cleanedData: {
   startDate: 2024-09-05T00:00:00.000Z,
   endDate: 2021-01-30T00:00:00.000Z,
   status: 'draft',
-  dict: { email: 'abc@gmail.com', age: 23 }
+  dict: { email: 'abc@gmail.com', age: 23 },
+  image: File {
+    size: 1409,
+    type: 'image/png',
+    name: 'test.png',
+    lastModified: 1725876450393
+  },
 }
 ```
 
@@ -93,6 +101,7 @@ cleanedData: {
 `ArrayRule:` Validates arrays with optional nested rules.<br/>
 `DateRule:` Validates date values with optional min and max constraints.<br/>
 `JSONRule:` Validates JSON objects with optional schema validation.<br/>
+`FileRule:` Validates file type / size and other validations<br/>
 
 ### Contact
 For any inquiries, please reach out to omerbhatti34@gmail.com

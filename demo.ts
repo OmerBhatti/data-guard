@@ -19,8 +19,8 @@ const API_RULES = {
 
 const validator = new Validator(API_RULES, {
 	username: 'testuser',
-	extra: 'data: [1, 2, 3, 4]',
-	dangerousField: 'Virus Code Here !!!',
+	extra: 'data: [1, 2, 3, 4]',  // this field will be removed
+	dangerousField: 'Virus Code Here !!!',  // this field will be removed
 	salary: '12000.2378787878',
 	active: true,
 	ids: [[1, 2, 3, 4], [1, 2, 3], [1]],
