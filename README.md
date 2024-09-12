@@ -105,3 +105,8 @@ cleanedData: {
 
 ### Contact
 For any inquiries, please reach out to omerbhatti34@gmail.com
+
+### Collaboration
+ - Pull a branch from master named `username/what-to-do`
+ - Do the required changes
+ - Push the changes and create a pull request
