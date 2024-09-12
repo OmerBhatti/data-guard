@@ -1,5 +1,5 @@
-import { StringRule, IntegerRule, FloatRule, BooleanRule, ArrayRule, DateRule, JSONRule } from './rules';
-import Validator from '.';
+import { StringRule, IntegerRule, FloatRule, BooleanRule, ArrayRule, DateRule, JSONRule } from './rules/index';
+import Validator from './index';
 
 const API_RULES = {
 	username: new StringRule(true, null, 20, new RegExp('^[a-zA-Z0-9]+$')),

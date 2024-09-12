@@ -38,3 +38,7 @@ export default class Validator {
 		}, {});
 	}
 }
+
+export * from './types';
+export * from './errors';
+export { StringRule, IntegerRule, BooleanRule, JSONRule, ArrayRule, DateRule, FileRule, FloatRule } from './rules';
